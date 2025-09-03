@@ -29,7 +29,7 @@ exports.handler = async (event) => {
 
     // Insert sesuai urutan kolom tabel: username, password, email
     await connection.execute(
-      'INSERT INTO users (username, password, email) VALUES (?, ?, ?)',
+      'INSERT INTO userx (username, password, email) VALUES (?, ?, ?)',
       [username, password, email]
     );
 
