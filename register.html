@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrasi</title>
+  <title>Registrasi Mahasiswa</title>
 </head>
 <body>
-  <h1>Form Registrasi</h1>
+  <h1>Form Registrasi Mahasiswa</h1>
   <form id="registerForm">
     <input type="number" id="id" placeholder="ID (isi manual)" required><br><br>
+    <input type="text" id="npm" placeholder="NPM" required><br><br>
     <input type="text" id="username" placeholder="Username" required><br><br>
     <input type="password" id="password" placeholder="Password" required><br><br>
     <input type="email" id="email" placeholder="Email" required><br><br>
+    <input type="text" id="phone" placeholder="No. HP" required><br><br>
     <button type="submit">Daftar</button>
   </form>
 
@@ -21,15 +23,19 @@
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const id = document.getElementById('id').value;
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const email = document.getElementById('email').value;
+      const data = {
+        id: document.getElementById('id').value,
+        npm: document.getElementById('npm').value,
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value
+      };
 
       const response = await fetch('/.netlify/functions/registrasi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, username, password, email })
+        body: JSON.stringify(data)
       });
 
       const result = await response.json();

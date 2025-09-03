@@ -10,9 +10,9 @@ exports.handler = async (event) => {
 
   let connection;
   try {
-    const { id, username, password, email } = JSON.parse(event.body);
+    const { id, npm, username, password, email, phone } = JSON.parse(event.body);
 
-    if (!id || !username || !password || !email) {
+    if (!id || !npm || !username || !password || !email || !phone) {
       return {
         statusCode: 400,
         body: JSON.stringify({ success: false, message: 'Semua field wajib diisi.' }),
@@ -27,10 +27,9 @@ exports.handler = async (event) => {
       port: process.env.DB_PORT
     });
 
-    // Insert dengan id manual
     await connection.execute(
-      'INSERT INTO userx (id, username, password, email) VALUES (?, ?, ?, ?)',
-      [id, username, password, email]
+      'INSERT INTO mahasiswa (id, npm, username, password, email, phone) VALUES (?, ?, ?, ?, ?, ?)',
+      [id, npm, username, password, email, phone]
     );
 
     return {
