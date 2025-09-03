@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const bcrypt = require('bcryptjs');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -10,10 +11,17 @@ exports.handler = async (event) => {
 
   let connection;
   try {
-    // Ambil data dari body permintaan frontend
     const { username, password, email } = JSON.parse(event.body);
 
-    // Buka koneksi ke MySQL Railway
+    if (!username || !password || !email) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ success: false, message: 'Semua field wajib diisi.' }),
+      };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -22,11 +30,10 @@ exports.handler = async (event) => {
       port: process.env.DB_PORT
     });
 
-    // Simpan data user baru
-    // ⚠️ Untuk keamanan, hash password dulu sebelum simpan (bcrypt)
+    // sekarang urutan kolomnya sama persis seperti tabel: username, password, email
     await connection.execute(
       'INSERT INTO users (username, password, email) VALUES (?, ?, ?)',
-      [username, password, email]
+      [username, hashedPassword, email]
     );
 
     return {
