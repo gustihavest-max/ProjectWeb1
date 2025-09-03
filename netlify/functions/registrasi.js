@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-const bcrypt = require('bcryptjs');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -20,8 +19,6 @@ exports.handler = async (event) => {
       };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -30,10 +27,10 @@ exports.handler = async (event) => {
       port: process.env.DB_PORT
     });
 
-    // sekarang urutan kolomnya sama persis seperti tabel: username, password, email
+    // Insert sesuai urutan kolom tabel: username, password, email
     await connection.execute(
       'INSERT INTO users (username, password, email) VALUES (?, ?, ?)',
-      [username, hashedPassword, email]
+      [username, password, email]
     );
 
     return {
