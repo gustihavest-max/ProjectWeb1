@@ -1,62 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Register Page</title>
-    <link rel="stylesheet" href="register-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrasi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #msg {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="card-header">
-                <h2>Daftar Akun</h2>
-                <p>Silakan isi data Anda untuk membuat akun baru.</p>
-            </div>
-            <form class="login-form">
-                <div class="input-group">
-                    <label for="name">Nama Lengkap</label>
-                    <div class="input-field">
-                        <i class="fas fa-id-card"></i>
-                        <input type="text" id="name" placeholder="Masukkan nama lengkap Anda" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="username" placeholder="Buat username unik" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="Buat password yang kuat" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="phone">Nomor Telepon</label>
-                    <div class="input-field">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" id="phone" placeholder="Masukkan nomor telepon" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="address">Alamat</label>
-                    <div class="input-field">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <input type="text" id="address" placeholder="Masukkan alamat lengkap Anda" required>
-                    </div>
-                </div>
-                
-                <button type="submit" class="login-button">Daftar Sekarang</button>
-            </form>
-            <div class="register-link">
-                Sudah punya akun? <a href="index.html">Login di sini</a>
-            </div>
-        </div>
-    </div>
+  <div class="card">
+    <h2>Form Registrasi</h2>
+    <form id="registerForm">
+      <!-- urutan sesuai tabel: username, password, email -->
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <button type="submit">Daftar</button>
+    </form>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        email: document.getElementById('email').value
+      };
+
+      const res = await fetch('/.netlify/functions/registrasi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      const msg = document.getElementById('msg');
+      msg.textContent = result.message;
+      msg.style.color = result.success ? 'green' : 'red';
+    });
+  </script>
 </body>
 </html>
