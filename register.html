@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrasi Mahasiswa</title>
+  <title>Registrasi User</title>
 </head>
 <body>
-  <h1>Form Registrasi Mahasiswa</h1>
+  <h1>Form Registrasi User</h1>
   <form id="registerForm">
-    <input type="number" id="id" placeholder="ID (isi manual)" required><br><br>
-    <input type="text" id="npm" placeholder="NPM" required><br><br>
+    <input type="text" id="npm" placeholder="NPM (Primary Key)" required><br><br>
     <input type="text" id="username" placeholder="Username" required><br><br>
     <input type="password" id="password" placeholder="Password" required><br><br>
     <input type="email" id="email" placeholder="Email" required><br><br>
@@ -24,7 +23,6 @@
       e.preventDefault();
 
       const data = {
-        id: document.getElementById('id').value,
         npm: document.getElementById('npm').value,
         username: document.getElementById('username').value,
         password: document.getElementById('password').value,
