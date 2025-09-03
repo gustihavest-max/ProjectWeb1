@@ -4,19 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrasi User</title>
+  <!-- Panggil file CSS -->
+  <link rel="stylesheet" href="register-style.css">
 </head>
 <body>
-  <h1>Form Registrasi User</h1>
-  <form id="registerForm">
-    <input type="text" id="npm" placeholder="NPM (Primary Key)" required><br><br>
-    <input type="text" id="username" placeholder="Username" required><br><br>
-    <input type="password" id="password" placeholder="Password" required><br><br>
-    <input type="email" id="email" placeholder="Email" required><br><br>
-    <input type="text" id="phone" placeholder="No. HP" required><br><br>
-    <button type="submit">Daftar</button>
-  </form>
+  <div class="register-container">
+    <div class="register-card">
+      <div class="card-header">
+        <h2>Form Registrasi</h2>
+        <p>Silakan isi data berikut</p>
+      </div>
 
-  <p id="result"></p>
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="npm">NIP / NPM</label>
+          <div class="input-field">
+            <input type="text" id="npm" placeholder="NIP (Primary Key)" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="username">Username</label>
+          <div class="input-field">
+            <input type="text" id="username" placeholder="Username" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-field">
+            <input type="password" id="password" placeholder="Password" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-field">
+            <input type="email" id="email" placeholder="Email" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="phone">No. HP</label>
+          <div class="input-field">
+            <input type="text" id="phone" placeholder="No. HP" required>
+          </div>
+        </div>
+
+        <button type="submit" class="register-button">Daftar</button>
+      </form>
+
+      <p id="result"></p>
+    </div>
+  </div>
 
   <script>
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
@@ -30,14 +70,18 @@
         phone: document.getElementById('phone').value
       };
 
-      const response = await fetch('/.netlify/functions/registrasi', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      try {
+        const response = await fetch('/.netlify/functions/registrasi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      const result = await response.json();
-      document.getElementById('result').innerText = result.message || 'Selesai';
+        const result = await response.json();
+        document.getElementById('result').innerText = result.message || 'Selesai';
+      } catch (err) {
+        document.getElementById('result').innerText = 'Terjadi kesalahan koneksi.';
+      }
     });
   </script>
 </body>

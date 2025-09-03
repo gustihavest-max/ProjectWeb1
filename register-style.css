@@ -20,11 +20,10 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Tambahkan background gambar di sini */
     background-image: url('petani-milenial.jpg');
-    background-size: cover; /* Pastikan gambar menutupi seluruh halaman */
-    background-position: center; /* Posisikan gambar di tengah */
-    background-repeat: no-repeat; /* Hindari pengulangan gambar */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     
     display: flex;
     justify-content: center;
@@ -34,7 +33,7 @@ body {
     line-height: 1.6;
 }
 
-.login-container {
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,7 +41,7 @@ body {
     padding: 20px;
 }
 
-.login-card {
+.register-card {
     background-color: var(--card-background);
     padding: 40px;
     border-radius: 12px;
@@ -53,7 +52,7 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.login-card:hover {
+.register-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px var(--shadow-color);
 }
@@ -124,40 +123,7 @@ body {
     background-color: var(--card-background);
 }
 
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    font-size: 0.9em;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    color: var(--light-text-color);
-}
-
-.remember-me input[type="checkbox"] {
-    margin-right: 8px;
-    width: 16px;
-    height: 16px;
-    accent-color: var(--primary-color);
-}
-
-.forgot-password {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: var(--secondary-color);
-    text-decoration: underline;
-}
-
-.login-button {
+.register-button {
     width: 100%;
     padding: 15px;
     background-color: var(--primary-color);
@@ -172,87 +138,13 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.login-button:hover {
+.register-button:hover {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
-.login-button:active {
+.register-button:active {
     transform: translateY(0);
-}
-
-.social-login {
-    margin-bottom: 25px;
-}
-
-.social-login p {
-    color: var(--light-text-color);
-    margin-bottom: 15px;
-    position: relative;
-}
-
-.social-login p::before,
-.social-login p::after {
-    content: '';
-    position: absolute;
-    width: 30%;
-    height: 1px;
-    background-color: var(--border-color);
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.social-login p::before {
-    left: 0;
-}
-
-.social-login p::after {
-    right: 0;
-}
-
-.social-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-.social-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95em;
-    width: 48%;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.social-btn i {
-    margin-right: 10px;
-    font-size: 1.1em;
-}
-
-.social-btn.google {
-    background-color: #db4a39; /* Merah Google */
-    color: #fff;
-}
-
-.social-btn.google:hover {
-    background-color: #c23321;
-    transform: translateY(-2px);
-}
-
-.social-btn.facebook {
-    background-color: #3b5998; /* Biru Facebook */
-    color: #fff;
-}
-
-.social-btn.facebook:hover {
-    background-color: #2d4373;
-    transform: translateY(-2px);
 }
 
 .register-link {
@@ -275,15 +167,8 @@ body {
 
 /* Responsif untuk layar kecil */
 @media (max-width: 500px) {
-    .login-card {
+    .register-card {
         padding: 30px 20px;
         margin: 0 15px;
-    }
-    .social-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .social-btn {
-        width: 100%;
     }
 }
