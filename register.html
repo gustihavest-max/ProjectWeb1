@@ -1,112 +1,127 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi User</title>
-    <link rel="stylesheet" href="register-style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrasi User</title>
+  <link rel="stylesheet" href="register-style.css">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="register-container">
-        <div class="register-card">
-            <div class="card-header">
-              <!-- SweetAlert2 -->
-              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <div class="register-container">
+    <div class="register-card">
+      <div class="card-header">
+        <h2>Form Pendaftaran</h2>
+        <p>Silakan isi data berikut</p>
+      </div>
 
-                <h2>Form Pendafataran</h2>
-                <p>Silakan isi data berikut</p>
-            </div>
-
-            <form id="registerForm">
-                <div class="input-group">
-                    <label for="nip">NIP</label>
-                    <div class="input-field">
-                        <input type="text" id="nip" placeholder="NIP (Primary Key)" required>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <div class="input-field">
-                        <input type="text" id="username" placeholder="Username" required>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <div class="input-field">
-                        <input type="password" id="password" placeholder="Password" required>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <div class="input-field">
-                        <input type="email" id="email" placeholder="Email" required>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label for="phone">No. HP</label>
-                    <div class="input-field">
-                        <input type="text" id="phone" placeholder="No. HP" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="register-button">Daftar</button>
-                <button type="button" class="signin-button" onclick="window.location.href='index.html'">Sign In</button>
-            </form>
-
-            <p id="result"></p>
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="nip">NIP</label>
+          <div class="input-field">
+            <input type="text" id="nip" placeholder="NIP (Primary Key)" required>
+          </div>
         </div>
+
+        <div class="input-group">
+          <label for="username">Username</label>
+          <div class="input-field">
+            <input type="text" id="username" placeholder="Username" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-field">
+            <input type="password" id="password" placeholder="Password" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-field">
+            <input type="email" id="email" placeholder="Email" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="phone">No. HP</label>
+          <div class="input-field">
+            <input type="text" id="phone" placeholder="No. HP" required>
+          </div>
+        </div>
+
+        <button type="submit" class="register-button">Daftar</button>
+        <button type="button" class="signin-button" onclick="window.location.href='index.html'">Sign In</button>
+      </form>
     </div>
+  </div>
 
-    <script>
-document.getElementById('registerForm').addEventListener('submit', async function (e) {
-  e.preventDefault();
+  <script>
+    const form = document.getElementById('registerForm');
+    const btn = document.querySelector('.register-button');
 
-  const nip = document.getElementById('nip').value;
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  // kirim ke Netlify Function
-  try {
-    const response = await fetch('/.netlify/functions/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nip, username, password })
+      btn.disabled = true;
+      btn.textContent = 'Diproses…';
+
+      const data = {
+        nip: document.getElementById('nip').value,
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value
+      };
+
+      try {
+        const response = await fetch('/.netlify/functions/registrasi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        // cek konten balikan
+        const contentType = response.headers.get('content-type');
+        let result = {};
+        if (contentType && contentType.includes('application/json')) {
+          result = await response.json();
+        } else {
+          result = { message: await response.text() };
+        }
+
+        if (response.ok) {
+          // sukses
+          Swal.fire({
+            icon: 'success',
+            title: 'Registrasi Berhasil',
+            text: 'Akun Anda sudah tersimpan.',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          form.reset();
+        } else {
+          // gagal: nip sudah ada atau error lain
+          Swal.fire({
+            icon: 'error',
+            title: 'Registrasi Gagal',
+            text: result.message || 'Terjadi kesalahan saat menyimpan data.'
+          });
+        }
+      } catch (err) {
+        // koneksi error
+        Swal.fire({
+          icon: 'error',
+          title: 'Kesalahan Jaringan',
+          text: err.message
+        });
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Daftar';
+      }
     });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      // ✅ popup notifikasi sukses
-      Swal.fire({
-        icon: 'success',
-        title: 'Registrasi Berhasil',
-        text: 'Akun Anda sudah tersimpan.',
-        showConfirmButton: false,
-        timer: 2000
-      });
-      // kosongkan form
-      document.getElementById('registerForm').reset();
-    } else {
-      // ❌ popup error
-      Swal.fire({
-        icon: 'error',
-        title: 'Registrasi Gagal',
-        text: result.message || 'Terjadi kesalahan.'
-      });
-    }
-  } catch (err) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Kesalahan Jaringan',
-      text: err.message
-    });
-  }
-});
-</script>
-
+  </script>
 </body>
 </html>
