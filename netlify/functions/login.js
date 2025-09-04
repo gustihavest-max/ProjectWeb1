@@ -21,7 +21,7 @@ exports.handler = async (event) => {
     });
 
     const [rows] = await connection.execute(
-      'SELECT username FROM userz WHERE username = ? AND password = ?',
+      'SELECT username FROM daftaruser WHERE username = ? AND password = ?',
       [username, password]
     );
 

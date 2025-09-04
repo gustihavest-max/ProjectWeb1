@@ -28,8 +28,8 @@ exports.handler = async (event) => {
     });
 
     await connection.execute(
-      'INSERT INTO userz (npm, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
-      [npm, username, password, email, phone]
+      'INSERT INTO daftaruser (nip, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
+      [nip, username, password, email, phone]
     );
 
     return {
