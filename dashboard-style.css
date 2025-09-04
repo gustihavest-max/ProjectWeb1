@@ -1,150 +1,192 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #388E3C;
-    --text-color: #333;
-    --light-text-color: #666;
-    --background-color: #f0f2f5;
-    --card-background: #fff;
-    --border-color: #ddd;
-    --shadow-color: rgba(0, 0, 0, 0.08);
+  --primary-color: #4CAF50;
+  --secondary-color: #388E3C;
+  --text-color: #333;
+  --light-text-color: #666;
+  --background-color: #f0f2f5;
+  --card-background: #fff;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.08);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* === Tambah background image full halaman === */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+
+  background: url('bg-pertanian3.jpg') no-repeat center center fixed;
+  background-size: cover; /* supaya penuh layar */
+  color: var(--text-color);
+  min-height: 100vh; /* supaya body penuh tinggi layar */
 }
 
-/* Navbar */
+/* Navbar kita bikin semi transparan supaya kelihatan */
 .navbar {
-    background-color: var(--card-background);
-    box-shadow: 0 2px 10px var(--shadow-color);
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: rgba(255, 255, 255, 0.9); /* semi transparan */
+  box-shadow: 0 2px 10px var(--shadow-color);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-brand {
-    font-size: 1.5em;
-    font-weight: 700;
-    color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* logo di header */
+.navbar-brand img {
+  height: 40px; /* atur tinggi logo */
+  margin-right: 10px;
 }
 
 .navbar-nav {
-    display: flex;
-    gap: 25px;
+  display: flex;
+  gap: 25px;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: var(--light-text-color);
-    font-weight: 500;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: var(--light-text-color);
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--primary-color);
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-color);
 }
 
 .nav-link.logout {
-    color: #f44336;
+  color: #f44336;
 }
 
 .nav-link.logout:hover {
-    color: #d32f2f;
+  color: #d32f2f;
 }
 
 /* Dashboard Content */
 .dashboard-container {
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .dashboard-header {
-    text-align: center;
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .dashboard-header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: var(--primary-color);
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .dashboard-header p {
-    font-size: 1.1em;
-    color: var(--light-text-color);
+  font-size: 1.1em;
+  color: var(--light-text-color);
 }
 
 .dashboard-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
 }
 
+/* === Card + animasi slide in === */
 .card {
-    background-color: var(--card-background);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px var(--shadow-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255,255,255,0.9); /* semi transparan kartu */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+
+  /* state awal untuk animasi */
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideInUp 1.2s ease forwards;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.card:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+/* keyframes animasi */
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px var(--shadow-color);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px var(--shadow-color);
 }
 
 .card h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: var(--text-color);
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: var(--text-color);
 }
 
 .card p {
-    font-size: 1em;
-    color: var(--light-text-color);
-    margin-bottom: 20px;
+  font-size: 1em;
+  color: var(--light-text-color);
+  margin-bottom: 20px;
 }
 
 .card-link {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
 .card-link:hover {
-    background-color: var(--secondary-color);
+  background-color: var(--secondary-color);
 }
 
 /* Responsif */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
-    }
-    .navbar-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .dashboard-container {
-        padding: 20px;
-    }
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  .navbar-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dashboard-container {
+    padding: 20px;
+  }
 }
