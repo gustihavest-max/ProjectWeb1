@@ -38,16 +38,19 @@ body {
 }
 
 .navbar-brand {
-  text-decoration: none; /* hilangkan underline */
-  color: inherit;        /* biar warnanya ikut warna teks di navbar */
-  display: flex;         /* supaya logo & teks sejajar */
-  align-items: center;   /* rapikan vertikal */
-  gap: 8px;              /* jarak antara logo & teks */
+  text-decoration: none;     /* hilangkan underline */
+  color: #4CAF50;            /* hijau seperti awal */
+  display: flex;             
+  align-items: center;       
+  gap: 8px;                  
+  font-weight: 600;          /* opsional biar lebih tebal */
 }
 
 .navbar-brand:hover {
-  text-decoration: none; /* tetap tanpa underline saat hover */
+  text-decoration: none;     /* tetap tanpa underline */
+  color: #388E3C;            /* warna hijau lebih gelap saat hover */
 }
+
 
 
 /* logo di header */
