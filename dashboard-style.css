@@ -43,13 +43,13 @@ body {
   display: flex;             
   align-items: center;       
   gap: 8px;     
-  font-size: 1.7em;             
+  font-size: 1.6em;             
   font-weight: 600;          /* opsional biar lebih tebal */
 }
 
 .navbar-brand:hover {
   text-decoration: none; 
-  font-size: 1.9em;    /* tetap tanpa underline */
+  font-size: 1.7em;    /* tetap tanpa underline */
   color: #388E3C;            /* warna hijau lebih gelap saat hover */
 }
 
