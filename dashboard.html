@@ -10,16 +10,16 @@
 
   <header class="navbar">
     <div class="navbar-brand">
-      <!-- logo offline -->
       <img src="Logo-Kementan.png" alt="Logo Kementan">
       BRMP PERKEBUNAN
     </div>
     <nav class="navbar-nav">
+      <!-- tampilkan username di sini -->
+      <span id="userDisplay" class="nav-link"></span>
       <a href="#" class="nav-link active">Dashboard</a>
-      <!-- profil diarahkan ke website -->
       <a href="https://perkebunan.brmp.pertanian.go.id/" class="nav-link" target="_blank">Profil</a>
       <a href="#" class="nav-link">Pengaturan</a>
-      <a href="index.html" class="nav-link logout">Keluar</a>
+      <a href="#" id="logoutBtn" class="nav-link logout">Keluar</a>
     </nav>
   </header>
 
@@ -47,6 +47,30 @@
       </div>
     </div>
   </main>
+
+  <!-- Script untuk ambil username dan logout -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // baca username yang login dari localStorage
+      const user = localStorage.getItem('loggedInUser');
+
+      // kalau belum login, kembalikan ke halaman login
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // tampilkan username di header
+      document.getElementById('userDisplay').textContent = '👤 ' + user;
+
+      // tombol keluar
+      document.getElementById('logoutBtn').addEventListener('click', e => {
+        e.preventDefault();
+        localStorage.removeItem('loggedInUser');
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
 
 </body>
 </html>

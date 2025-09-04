@@ -17,7 +17,7 @@ exports.handler = async (event) => {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      port: process.env.DB_PORT // jangan lupa port publik
+      port: process.env.DB_PORT
     });
 
     const [rows] = await connection.execute(
@@ -26,13 +26,31 @@ exports.handler = async (event) => {
     );
 
     if (rows.length > 0) {
-      return { statusCode: 200, body: JSON.stringify({ success: true, message: 'Login berhasil!' }) };
+      // kirim username balik supaya frontend bisa simpan
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          success: true,
+          message: 'Login berhasil!',
+          username: rows[0].username
+        })
+      };
     } else {
-      return { statusCode: 401, body: JSON.stringify({ success: false, message: 'Username atau password salah.' }) };
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ success: false, message: 'Username atau password salah.' })
+      };
     }
   } catch (error) {
     console.error('Terjadi kesalahan:', error);
-    return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Kesalahan server internal.', error: error.message }) };
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        success: false,
+        message: 'Kesalahan server internal.',
+        error: error.message
+      })
+    };
   } finally {
     if (connection) await connection.end();
   }
