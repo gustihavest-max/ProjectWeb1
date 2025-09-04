@@ -38,12 +38,17 @@ body {
 }
 
 .navbar-brand {
-  display: flex;
-  align-items: center;
-  font-size: 1.5em;
-  font-weight: 700;
-  color: var(--primary-color);
+  text-decoration: none; /* hilangkan underline */
+  color: inherit;        /* biar warnanya ikut warna teks di navbar */
+  display: flex;         /* supaya logo & teks sejajar */
+  align-items: center;   /* rapikan vertikal */
+  gap: 8px;              /* jarak antara logo & teks */
 }
+
+.navbar-brand:hover {
+  text-decoration: none; /* tetap tanpa underline saat hover */
+}
+
 
 /* logo di header */
 .navbar-brand img {
