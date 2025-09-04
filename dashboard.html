@@ -14,18 +14,17 @@
       BRMP PERKEBUNAN
     </div>
     <nav class="navbar-nav">
-      <!-- tampilkan username di sini -->
-      <span id="userDisplay" class="nav-link"></span>
       <a href="#" class="nav-link active">Dashboard</a>
       <a href="https://perkebunan.brmp.pertanian.go.id/" class="nav-link" target="_blank">Profil</a>
       <a href="#" class="nav-link">Pengaturan</a>
-      <a href="#" id="logoutBtn" class="nav-link logout">Keluar</a>
+      <!-- link logout -->
+      <a href="#" class="nav-link logout" id="logoutLink">Keluar</a>
     </nav>
   </header>
 
   <main class="dashboard-container">
     <div class="dashboard-header">
-      <h1>Selamat Datang di BRMP Perkebunan!</h1>
+      <h1 id="welcomeText">Selamat Datang di BRMP Perkebunan!</h1>
       <p>Ini adalah halaman utama Anda setelah berhasil login.</p>
     </div>
 
@@ -48,27 +47,24 @@
     </div>
   </main>
 
-  <!-- Script untuk ambil username dan logout -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // baca username yang login dari localStorage
-      const user = localStorage.getItem('loggedInUser');
+    // Ambil username dari localStorage
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const welcomeText = document.getElementById('welcomeText');
 
-      // kalau belum login, kembalikan ke halaman login
-      if (!user) {
-        window.location.href = 'index.html';
-        return;
-      }
+    if (loggedInUser) {
+      welcomeText.textContent = `Selamat Datang, ${loggedInUser}!`;
+    } else {
+      // kalau tidak ada username di localStorage, kembali ke login
+      window.location.href = '/index.html';
+    }
 
-      // tampilkan username di header
-      document.getElementById('userDisplay').textContent = '👤 ' + user;
-
-      // tombol keluar
-      document.getElementById('logoutBtn').addEventListener('click', e => {
-        e.preventDefault();
-        localStorage.removeItem('loggedInUser');
-        window.location.href = 'index.html';
-      });
+    // tombol logout hapus localStorage
+    const logoutLink = document.getElementById('logoutLink');
+    logoutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('loggedInUser'); // hapus username
+      window.location.href = '/index.html'; // balik ke login
     });
   </script>
 
