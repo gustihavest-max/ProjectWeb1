@@ -10,9 +10,9 @@ exports.handler = async (event) => {
 
   let connection;
   try {
-    const { npm, username, password, email, phone } = JSON.parse(event.body);
+    const { nip, username, password, email, phone } = JSON.parse(event.body);
 
-    if (!npm || !username || !password || !email || !phone) {
+    if (!nip || !username || !password || !email || !phone) {
       return {
         statusCode: 400,
         body: JSON.stringify({ success: false, message: 'Semua field wajib diisi.' }),
