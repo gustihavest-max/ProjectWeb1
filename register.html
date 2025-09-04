@@ -6,8 +6,32 @@
   <title>Registrasi User</title>
   <!-- Panggil file CSS -->
   <link rel="stylesheet" href="register-style.css">
+  <style>
+    /* Tambahan CSS untuk tombol back */
+    .back-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #4CAF50; /* sesuaikan warna */
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .back-button:hover {
+      background-color: #45a049;
+    }
+    body {
+      position: relative; /* supaya absolute di atas body */
+    }
+  </style>
 </head>
 <body>
+  <!-- Tambahan tombol back -->
+  <button class="back-button" onclick="window.location.href='login.html'">Kembali</button>
+
   <div class="register-container">
     <div class="register-card">
       <div class="card-header">
