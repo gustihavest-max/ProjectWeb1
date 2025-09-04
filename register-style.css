@@ -6,7 +6,7 @@
     --text-color: #333;
     --light-text-color: #666;
     --background-color: #f0f2f5;
-    --card-background: #fff;
+    --card-background: rgba(255,255,255,0.8); /* transparan 80% */
     --border-color: #ddd;
     --shadow-color: rgba(0, 0, 0, 0.08);
     --focus-color: #81C784; /* Hijau saat fokus */
@@ -43,6 +43,7 @@ body {
 
 .register-card {
     background-color: var(--card-background);
+    backdrop-filter: blur(10px); /* efek glass */
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 10px 25px var(--shadow-color);
@@ -120,7 +121,7 @@ body {
 .input-field:focus-within {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px var(--focus-color);
-    background-color: var(--card-background);
+    background-color: #fff;
 }
 
 .register-button,
@@ -137,6 +138,7 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* tombol daftar hijau */
 .register-button {
     background-color: var(--primary-color);
     color: #fff;
@@ -151,16 +153,16 @@ body {
     transform: translateY(0);
 }
 
-/* Gaya untuk tombol Sign In dengan efek kaca */
+/* tombol sign in sekarang sama dengan tombol daftar */
 .signin-button {
-    background-color: rgba(255, 255, 255, 0.2); /* Transparan 80% */
-    color: var(--text-color);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Garis tepi semi-transparan */
-    backdrop-filter: blur(10px); /* Efek kaca */
+    background-color: var(--primary-color); /* hijau penuh */
+    color: #fff;
+    border: none; /* hilangkan border semi transparan */
+    backdrop-filter: none; /* hilangkan efek kaca */
 }
 
 .signin-button:hover {
-    background-color: rgba(50, 255, 55, 0.4);
+    background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
