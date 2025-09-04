@@ -43,7 +43,7 @@ body {
 
 .register-card {
     background-color: var(--card-background);
-    backdrop-filter: blur(10px); /* efek glass */
+    backdrop-filter: blur(6px); /* efek glass */
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 10px 25px var(--shadow-color);
