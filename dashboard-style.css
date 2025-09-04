@@ -52,7 +52,6 @@ body {
 }
 
 
-
 /* logo di header */
 .navbar-brand img {
   height: 50px; /* atur tinggi logo */
@@ -94,6 +93,7 @@ body {
 .dashboard-header {
   text-align: center;
   margin-bottom: 40px;
+  color: #f1f1f1;
 }
 
 .dashboard-header h1 {
