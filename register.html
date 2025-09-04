@@ -90,7 +90,7 @@
         if (response.ok) {
           // popup sukses
           Swal.fire({
-            icon: 'SUKSES :)',
+            icon: 'succes',
             title: 'Registrasi Berhasil',
             text: result.message || 'Akun Anda sudah tersimpan.',
             showConfirmButton: false,
@@ -100,7 +100,7 @@
         } else {
           // popup error (misal NIP sudah terpakai)
           Swal.fire({
-            icon: 'EROR',
+            icon: 'error',
             title: 'Registrasi Gagal',
             text: result.message || 'Terjadi kesalahan saat menyimpan data.'
           });
@@ -108,7 +108,7 @@
       } catch (err) {
         // popup kesalahan jaringan
         Swal.fire({
-          icon: 'EROR 404',
+          icon: 'error',
           title: 'Kesalahan Jaringan',
           text: err.message
         });
