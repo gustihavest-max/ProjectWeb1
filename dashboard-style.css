@@ -95,7 +95,6 @@ body {
 .dashboard-header {
   text-align: center;
   margin-bottom: 40px;
-  color: #f1f1f1;
 }
 
 .dashboard-header h1 {
@@ -107,7 +106,7 @@ body {
 
 .dashboard-header p {
   font-size: 1.1em;
-  color: var(--light-text-color);
+  color: #f1f1f1;
 }
 
 .dashboard-cards {
