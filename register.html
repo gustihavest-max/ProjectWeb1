@@ -1,110 +1,101 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrasi User</title>
-  <link rel="stylesheet" href="register-style.css">
-  <style>
-    /* Tambahan gaya tombol disabled supaya kelihatan */
-    .register-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi User</title>
+    <link rel="stylesheet" href="register-style.css">
 </head>
 <body>
-  <div class="register-container">
-    <div class="register-card">
-      <div class="card-header">
-        <h2>Form Registrasi</h2>
-        <p>Silakan isi data berikut</p>
-      </div>
+    <div class="register-container">
+        <div class="register-card">
+            <div class="card-header">
+                <h2>Form Pendafataran</h2>
+                <p>Silakan isi data berikut</p>
+            </div>
 
-      <form id="registerForm">
-        <div class="input-group">
-          <label for="npm">NIP / NPM</label>
-          <div class="input-field">
-            <input type="text" id="npm" placeholder="NIP (Primary Key)" required>
-          </div>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="nip">NIP</label>
+                    <div class="input-field">
+                        <input type="text" id="nip" placeholder="NIP (Primary Key)" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <div class="input-field">
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-field">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <div class="input-field">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">No. HP</label>
+                    <div class="input-field">
+                        <input type="text" id="phone" placeholder="No. HP" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="register-button">Daftar</button>
+                <button type="button" class="signin-button" onclick="window.location.href='index.html'">Sign In</button>
+            </form>
+
+            <p id="result"></p>
         </div>
-
-        <div class="input-group">
-          <label for="username">Username</label>
-          <div class="input-field">
-            <input type="text" id="username" placeholder="Username" required>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label for="password">Password</label>
-          <div class="input-field">
-            <input type="password" id="password" placeholder="Password" required>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label for="email">Email</label>
-          <div class="input-field">
-            <input type="email" id="email" placeholder="Email" required>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label for="phone">No. HP</label>
-          <div class="input-field">
-            <input type="text" id="phone" placeholder="No. HP" required>
-          </div>
-        </div>
-
-        <button type="submit" class="register-button">Daftar</button>
-      </form>
-
-      <p id="result"></p>
     </div>
-  </div>
 
-  <script>
-    // Ambil elemen form dan tombol
-    const form = document.getElementById('registerForm');
-    const btn = document.querySelector('.register-button');
-    const resultP = document.getElementById('result');
+    <script>
+  const form = document.getElementById('registerForm');
+  const btn = document.querySelector('.register-button'); // tombol Daftar
+  const resultP = document.getElementById('result');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      // Ubah tombol jadi "Diproses…" dan disable
-      btn.disabled = true;
-      btn.textContent = 'Diproses…';
-      resultP.innerText = ''; // kosongkan pesan sebelumnya
+    // ubah tombol jadi “Diproses…” dan disable
+    btn.disabled = true;
+    btn.textContent = 'Diproses…';
 
-      // Ambil data input
-      const data = {
-        nip: document.getElementById('npm').value,
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value
-      };
+    const data = {
+      nip: document.getElementById('npm').value,
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value
+    };
 
-      try {
-        // Kirim ke Netlify Function
-        const response = await fetch('/.netlify/functions/registrasi', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+    try {
+      const response = await fetch('/.netlify/functions/registrasi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-        const result = await response.json();
-        resultP.innerText = result.message || 'Selesai';
-      } catch (err) {
-        resultP.innerText = 'Terjadi kesalahan koneksi.';
-      } finally {
-        // Balikkan tombol ke semula
-        btn.disabled = false;
-        btn.textContent = 'Daftar';
-      }
-    });
-  </script>
+      const result = await response.json();
+      resultP.innerText = result.message || 'Selesai';
+    } catch (err) {
+      resultP.innerText = 'Terjadi kesalahan koneksi.';
+    } finally {
+      // balikan tombol ke semula setelah proses selesai
+      btn.disabled = false;
+      btn.textContent = 'Daftar';
+    }
+  });
+</script>
+
 </body>
 </html>
