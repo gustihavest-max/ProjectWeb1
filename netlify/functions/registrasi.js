@@ -31,7 +31,7 @@ exports.handler = async (event) => {
 
     // cek apakah NIP sudah ada
     const [rows] = await connection.execute(
-      'SELECT nip FROM userz WHERE nip = ?',
+      'SELECT nip FROM daftaruser WHERE nip = ?',
       [nip]
     );
 
@@ -47,7 +47,7 @@ exports.handler = async (event) => {
 
     // insert data baru
     await connection.execute(
-      'INSERT INTO userz (nip, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO daftaruser (nip, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
       [nip, username, password, email, phone]
     );
 
