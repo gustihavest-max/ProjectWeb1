@@ -59,64 +59,62 @@
   </div>
 
   <script>
-    const form = document.getElementById('registerForm');
-    const btn = document.querySelector('.register-button');
+  const form = document.getElementById('registerForm');
+  const btn = document.querySelector('.register-button');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      // disable tombol sementara
-      btn.disabled = true;
-      btn.textContent = 'Diproses…';
+    btn.disabled = true;
+    btn.textContent = 'Diproses…';
 
-      const data = {
-        nip: document.getElementById('nip').value.trim(),
-        username: document.getElementById('username').value.trim(),
-        password: document.getElementById('password').value,
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim()
-      };
+    const data = {
+      nip: document.getElementById('nip').value.trim(),
+      username: document.getElementById('username').value.trim(),
+      password: document.getElementById('password').value,
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim()
+    };
 
-      try {
-        const response = await fetch('/.netlify/functions/registrasi', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+    try {
+      const response = await fetch('/.netlify/functions/registrasi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // ✅ popup sukses (ikon centang + garis hijau)
+        Swal.fire({
+          icon: 'success',            // <-- perbaiki di sini
+          title: 'Registrasi Berhasil',
+          text: result.message || 'Akun Anda sudah tersimpan.',
+          showConfirmButton: false,
+          timer: 2000
         });
-
-        // pastikan backend selalu kirim JSON
-        const result = await response.json();
-
-        if (response.ok) {
-          // popup sukses
-          Swal.fire({
-            icon: 'succes',
-            title: 'Registrasi Berhasil',
-            text: result.message || 'Akun Anda sudah tersimpan.',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          form.reset();
-        } else {
-          // popup error (misal NIP sudah terpakai)
-          Swal.fire({
-            icon: 'error',
-            title: 'Registrasi Gagal',
-            text: result.message || 'Terjadi kesalahan saat menyimpan data.'
-          });
-        }
-      } catch (err) {
-        // popup kesalahan jaringan
+        form.reset();
+      } else {
+        // ❌ popup error (ikon X + garis merah)
         Swal.fire({
           icon: 'error',
-          title: 'Kesalahan Jaringan',
-          text: err.message
+          title: 'Registrasi Gagal',
+          text: result.message || 'Terjadi kesalahan saat menyimpan data.'
         });
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Daftar';
       }
-    });
-  </script>
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Kesalahan Jaringan',
+        text: err.message
+      });
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Daftar';
+    }
+  });
+</script>
+
 </body>
 </html>
