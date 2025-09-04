@@ -4,12 +4,13 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ message: 'Metode tidak diizinkan.' }),
+      body: JSON.stringify({ success: false, message: 'Metode tidak diizinkan.' }),
     };
   }
 
   let connection;
   try {
+    // ambil body
     const { nip, username, password, email, phone } = JSON.parse(event.body);
 
     if (!nip || !username || !password || !email || !phone) {
@@ -19,6 +20,7 @@ exports.handler = async (event) => {
       };
     }
 
+    // konek database
     connection = await mysql.createConnection({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -27,8 +29,25 @@ exports.handler = async (event) => {
       port: process.env.DB_PORT
     });
 
+    // cek apakah NIP sudah ada
+    const [rows] = await connection.execute(
+      'SELECT nip FROM userz WHERE nip = ?',
+      [nip]
+    );
+
+    if (rows.length > 0) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          success: false,
+          message: 'NIP sudah terdaftar. Gunakan NIP lain.'
+        }),
+      };
+    }
+
+    // insert data baru
     await connection.execute(
-      'INSERT INTO daftaruser (nip, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO userz (nip, username, password, email, phone) VALUES (?, ?, ?, ?, ?)',
       [nip, username, password, email, phone]
     );
 

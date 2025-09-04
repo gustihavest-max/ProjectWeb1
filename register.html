@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registrasi User</title>
   <link rel="stylesheet" href="register-style.css">
   <!-- SweetAlert2 -->
@@ -65,15 +65,16 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // disable tombol sementara
       btn.disabled = true;
       btn.textContent = 'Diproses…';
 
       const data = {
-        nip: document.getElementById('nip').value,
-        username: document.getElementById('username').value,
+        nip: document.getElementById('nip').value.trim(),
+        username: document.getElementById('username').value.trim(),
         password: document.getElementById('password').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim()
       };
 
       try {
@@ -83,27 +84,21 @@
           body: JSON.stringify(data)
         });
 
-        // cek konten balikan
-        const contentType = response.headers.get('content-type');
-        let result = {};
-        if (contentType && contentType.includes('application/json')) {
-          result = await response.json();
-        } else {
-          result = { message: await response.text() };
-        }
+        // pastikan backend selalu kirim JSON
+        const result = await response.json();
 
         if (response.ok) {
-          // sukses
+          // popup sukses
           Swal.fire({
             icon: 'success',
             title: 'Registrasi Berhasil',
-            text: 'Akun Anda sudah tersimpan.',
+            text: result.message || 'Akun Anda sudah tersimpan.',
             showConfirmButton: false,
             timer: 2000
           });
           form.reset();
         } else {
-          // gagal: nip sudah ada atau error lain
+          // popup error (misal NIP sudah terpakai)
           Swal.fire({
             icon: 'error',
             title: 'Registrasi Gagal',
@@ -111,7 +106,7 @@
           });
         }
       } catch (err) {
-        // koneksi error
+        // popup kesalahan jaringan
         Swal.fire({
           icon: 'error',
           title: 'Kesalahan Jaringan',
