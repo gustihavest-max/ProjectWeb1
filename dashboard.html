@@ -112,9 +112,9 @@
 
   <script>
     // ambil username yang login dari localStorage
-    const user = localStorage.getItem('loggedInUser');
+    const username = localStorage.getItem('loggedInUser');
 
-    if (!user) {
+    if (!username) {
       // jika tidak ada user login, arahkan kembali ke halaman login
       window.location.href = '/index.html';
     } else {
